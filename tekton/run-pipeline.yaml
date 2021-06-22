@@ -1,0 +1,22 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: piers-walter-own-app-buildah-
+spec:
+  serviceAccountName: build-bot
+  params:
+    - name: source-repo
+      value: https://github.com/piers-walter-ibm/bootcamp-own-app
+    - name: image-repo
+      value: quay.io/piers_walter_ibm/own-app
+  pipelineRef:
+    name: piers-walter-own-app-buildah
+  workspaces:
+    - name: pipeline-shared-data
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests: 
+              storage: 1Gi 
